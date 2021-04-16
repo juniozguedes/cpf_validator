@@ -1,5 +1,5 @@
-from .models import Cpf
 from rest_framework import serializers
+from .models import Cpf
 
 
 class CpfSerializer(serializers.HyperlinkedModelSerializer):

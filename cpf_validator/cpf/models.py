@@ -1,8 +1,6 @@
 from django.db import models
-STATUS_CHOICES = [
-        ('ALLOW','ALLOW'),
-        ('DENY', 'DENY')
-    ]
+
+STATUS_CHOICES = [('ALLOW', 'ALLOW'), ('DENY', 'DENY')]
 
 
 class Cpf(models.Model):

@@ -3,9 +3,10 @@ from rest_framework.views import APIView
 from rest_framework import status
 from .serializers import CpfSerializer
 from django.http import JsonResponse
-from .cpf import isCpfValid
+from .cpf import is_cpf_valid
 from .models import Cpf
 import json
+import re
 
 
 class List(APIView):
@@ -25,9 +26,11 @@ class Denied(APIView):
 class Detail(APIView):
     def get(self, request, format=None):
         try:
+            request.data['number'] = re.sub("[^0-9]", '',
+                                            request.data['number'])
             queryset = Cpf.objects.filter(number=request.data['number'])
             serializer = CpfSerializer(queryset, many=True)
-            if not isCpfValid(request.data['number']):
+            if not is_cpf_valid(request.data['number']):
                 return Response("Invalid CPF number")
             else:
                 if serializer.data == []:
@@ -38,9 +41,11 @@ class Detail(APIView):
 
     def delete(self, request, format=None):
         try:
+            request.data['number'] = re.sub("[^0-9]", '',
+                                            request.data['number'])
             queryset = Cpf.objects.filter(number=request.data['number'])
             serializer = CpfSerializer(queryset, many=True)
-            if not isCpfValid(request.data['number']):
+            if not is_cpf_valid(request.data['number']):
                 return Response("Invalid CPF number")
             else:
                 if serializer.data == []:
@@ -53,8 +58,10 @@ class Detail(APIView):
 
 class Create(APIView):
     def post(self, request, format=None):
-        if not isCpfValid(request.data['number']):
+        request.data['number'] = re.sub("[^0-9]", '', request.data['number'])
+        if not is_cpf_valid(request.data['number']):
             return Response("Invalid CPF number", status=404)
+        request.data['number'] = re.sub("[^0-9]", '', request.data['number'])
 
         serializer = CpfSerializer(data=request.data)
         if serializer.is_valid():
