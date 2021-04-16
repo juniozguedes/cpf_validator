@@ -1,3 +1,4 @@
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
@@ -10,6 +11,8 @@ import re
 
 
 class List(APIView):
+    permission_classes = (IsAuthenticated,)
+
     def get(self, request, format=None):
         queryset = Cpf.objects.all()
         serializer = CpfSerializer(queryset, many=True)
@@ -17,6 +20,7 @@ class List(APIView):
 
 
 class Denied(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self, request, format=None):
         queryset = Cpf.objects.filter(status='DENY')
         serializer = CpfSerializer(queryset, many=True)
@@ -24,6 +28,7 @@ class Denied(APIView):
 
 
 class Detail(APIView):
+    permission_classes = (IsAuthenticated,)
     def get(self, request, format=None):
         try:
             request.data['number'] = re.sub("[^0-9]", '',
@@ -57,6 +62,7 @@ class Detail(APIView):
 
 
 class Create(APIView):
+    permission_classes = (IsAuthenticated,)
     def post(self, request, format=None):
         request.data['number'] = re.sub("[^0-9]", '', request.data['number'])
         if not is_cpf_valid(request.data['number']):
