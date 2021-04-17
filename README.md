@@ -10,15 +10,15 @@ Git
 
 ## Install:
 
-`git clone https://github.com/juniozguedes/cpf_validator.git` Clone repo
-`cd cpf_validator` Change directories
-`cd cpf_validator` Change directories
-`pip install -r requirements` Install requirements
-`python manage.py makemigrations` Make migrations
-`python manage.py migrate` Migrate
-`python setup.py` Populate initial_cpf_data with denied numbers
-`python manage.py loaddata initial_cpf_data.json` Feed database with initial data
-`python manage.py runserver` Run the server
+git clone https://github.com/juniozguedes/cpf_validator.git
+cd cpf_validator
+cd cpf_validator
+pip install -r requirements
+python manage.py makemigrations
+python manage.py migrate
+python setup.py
+python manage.py loaddata initial_cpf_data.json
+python manage.py runserver
 
 ## Usage:
 
